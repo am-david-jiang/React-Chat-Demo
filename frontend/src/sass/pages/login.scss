@@ -1,0 +1,94 @@
+@use '../utils/testimony' as Testimony;
+
+.login {
+  // Layout
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  // Container(Actually Login Part) Section
+  &-container {
+    grid-column: span 5;
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Cover Section
+  &-cover {
+    grid-column: 6 / span 7;
+
+    // Layout
+    margin: 1.5rem 1.5rem 1.5rem -0.5rem;
+    position: relative;
+
+    // Border-Radius
+    border-radius: 16px;
+
+    // Background
+    background-image: url("../../../public/img/login.jpg");
+    background-size: cover;
+    background-position-x: 40%;
+  }
+
+  // Testimony
+  @include Testimony.testimony();
+
+  // NavBar
+  &-navbar {
+    display: block;
+    width: 100%;
+    padding: 2rem 3rem;
+  }
+
+  // Body Part
+  &-body {
+    padding: 3rem 5rem 3.5rem 5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  // Login Intro Part
+  &-intro {
+    margin-top: -0.5rem;
+    margin-bottom: 2.625rem;
+
+    & > h1 {
+      color: #1d2939;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    & > p {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      color: #6d6d6d;
+      margin-right: -3em;
+    }
+  }
+
+  &-input {
+    display: flex;
+    flex-direction: column;
+
+    & > input:first-of-type {
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  &-submit > p {
+    margin-top: 1.25rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #1d2939;
+  }
+}

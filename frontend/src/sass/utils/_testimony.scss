@@ -1,0 +1,41 @@
+// Testimony
+@mixin testimony($isRight: false) {
+  .testimony {
+    max-width: 21em;
+    font-size: 1.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: #f9fafb;
+
+    position: absolute;
+    bottom: 3rem;
+    @if $isRight {
+      right: 3rem;
+    } @else {
+      left: 3rem;
+    }
+
+    &-body {
+      font-size: 1em;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.75rem;
+
+      margin: 0;
+
+      span.large {
+        font-size: 1.777em;
+        letter-spacing: 0.2em;
+      }
+    }
+
+    &-author {
+      font-size: 0.888em;
+      font-weight: 500;
+      line-height: 1.625rem;
+
+      margin: 0;
+    }
+  }
+}
