@@ -27,6 +27,8 @@ import socket from "../socket";
 import { getImageUrl } from "../utils/Helper";
 import useTitle from "../hooks/useTitle";
 import ModalContent from "../components/ModalContent";
+import useMeasure from "../hooks/useMeasure";
+import VirtualizedMembersList from "../components/lists/VirtualizedMembersList";
 
 export default function ChatPage() {
   const [currentUsername, setCurrentUsername] = useState("");
@@ -44,6 +46,8 @@ export default function ChatPage() {
   const readAll = useChatStore((state) => state.readAll);
   const online = useChatStore((state) => state.online);
   const offline = useChatStore((state) => state.offline);
+
+  const [memberRef, memberRect] = useMeasure<HTMLUListElement>();
 
   useTitle(`Chat`);
 
@@ -150,10 +154,18 @@ export default function ChatPage() {
               isSmall={true}
             />
           </div>
-          <MembersList
+          {/* <MembersList
             data={contacts}
             renderItem={MemberListItem}
             action={setCurrentUsername}
+          /> */}
+          <VirtualizedMembersList
+            ref={memberRef}
+            data={contacts}
+            renderItem={MemberListItem}
+            action={setCurrentUsername}
+            itemHeight={48}
+            containerHeight={memberRect.height}
           />
         </div>
         <div className='chat-area'>
@@ -171,30 +183,12 @@ export default function ChatPage() {
       </div>
       {createPortal(
         <Modal isOpen={isOpen} title='Add User'>
-          {/* <div className='modal-form'>
-            <p>Enter the username and start the conversation</p>
-            <input
-              type='text'
-              name='username'
-              required
-              value={newUser}
-              onChange={setNewUser}
-            />
-          </div> */}
           <ModalContent
             state={newUser}
             handleChange={setNewUser}
             cancelAction={() => toggle()}
             okAction={handleClickToAddUser}
           />
-          {/* <div className='modal-action'>
-            <button className='modal-add' onClick={handleClickToAddUser}>
-              Add
-            </button>
-            <button className='modal-cancel' onClick={() => toggle()}>
-              Cancel
-            </button>
-          </div> */}
         </Modal>,
         document.body
       )}
