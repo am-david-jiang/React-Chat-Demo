@@ -25,7 +25,6 @@ function createSocket(httpServer) {
       // Check if temp messages exist. If so, send them to the user
       setTimeout(() => {
         const tempMsg = tempMessages[username];
-        console.log(tempMsg);
         if (tempMsg) {
           while (tempMsg.length) {
             const msg = tempMsg.shift();

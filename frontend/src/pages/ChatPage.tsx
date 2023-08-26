@@ -9,7 +9,8 @@ import useChatStore from "../stores/useChatStore";
 
 import Input from "../components/Input";
 import TopBar from "../components/TopBar";
-import MembersList from "../components/lists/MembersList";
+// import MembersList from "../components/lists/MembersList";
+import { testMembers } from "../utils/Test";
 import Modal from "../components/Modal";
 import ChatArea from "../components/ChatArea";
 
@@ -164,7 +165,7 @@ export default function ChatPage() {
             data={contacts}
             renderItem={MemberListItem}
             action={setCurrentUsername}
-            itemHeight={48}
+            itemHeight={72}
             containerHeight={memberRect.height}
           />
         </div>

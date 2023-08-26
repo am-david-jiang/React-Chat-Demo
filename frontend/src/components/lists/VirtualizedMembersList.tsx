@@ -17,11 +17,12 @@ const MembersListStyled = styled.ul`
   flex: 1;
   width: 100%;
 
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: flex-start;
+  position: relative;
 
-  overflow: auto;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -54,23 +55,30 @@ const VirtualizedMembersList = forwardRef(function <T, U extends Function>(
   const [scrollTop, setScrollTop] = useState(0);
   const startIndex = Math.floor(scrollTop / props.itemHeight);
   const endIndex = Math.min(
-    startIndex + Math.ceil(props.containerHeight / props.itemHeight),
-    props.data?.length || 0
+    Math.ceil((scrollTop + props.containerHeight) / props.itemHeight),
+    props.data ? props.data.length : 0
   );
   const visibleItems = props.data?.slice(startIndex, endIndex) || [];
-  const invisibleItemsHeight =
-    (startIndex + visibleItems.length - endIndex) * props.itemHeight;
+  const invisibleItemsHeight = props.data
+    ? (props.data.length - endIndex) * props.itemHeight
+    : 0;
+  const upHeight = startIndex * props.itemHeight;
   const handleScroll = (e: React.SyntheticEvent) => {
     setScrollTop(e.currentTarget.scrollTop);
   };
 
+  console.log(scrollTop, startIndex, endIndex, invisibleItemsHeight);
+
   return (
-    <MembersListStyled onScroll={throttle(handleScroll, 10)} ref={ref}>
-      <div style={{ width: "100%" }}>
-        {props.data?.map((member) =>
-          props.renderItem({ ...member, action: props.action })
-        )}
-      </div>
+    <MembersListStyled
+      onScroll={throttle(handleScroll, 10)}
+      ref={ref}
+      style={{ height: `${props.containerHeight}px` }}
+    >
+      <div style={{ height: `${upHeight}px` }}></div>
+      {visibleItems.map((member) =>
+        props.renderItem({ ...member, action: props.action })
+      )}
       <div style={{ height: `${invisibleItemsHeight}px` }} />
     </MembersListStyled>
   );
